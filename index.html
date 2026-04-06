@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wild Monkehs</title>
+<meta name="description" content="Wild Monkehs - VR game on Meta Horizon Store">
+<link rel="icon" href="icon.png">
+<style>
+  @font-face {
+    font-family: 'CutePixel';
+    src: url('CutePixel.ttf') format('truetype');
+    font-weight: normal;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; font-weight: normal; }
+
+  :root {
+    --bg:     #1c1c1c;
+    --panel:  #272727;
+    --border: #3a3a3a;
+    --text:   #c8c8c8;
+    --bright: #ffffff;
+    --muted:  #666;
+    --accent: #00e5ff;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'CutePixel', monospace;
+    font-size: 28px;
+    line-height: 1.6;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── HEADER + NAV combined bar ── */
+  header {
+    background: var(--panel);
+    border-bottom: 3px solid var(--border);
+    padding: 0 48px;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    min-height: 80px;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+    margin-right: auto;
+    flex-shrink: 0;
+  }
+
+  .header-brand img {
+    width: 56px;
+    height: 56px;
+    image-rendering: pixelated;
+  }
+
+  .header-brand h1 {
+    font-size: 2rem;
+    color: var(--bright);
+    letter-spacing: 3px;
+    white-space: nowrap;
+  }
+
+  /* ── NAV tabs in header right ── */
+  nav {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    color: var(--muted);
+    font-size: 1rem;
+    letter-spacing: 2px;
+    border-bottom: 4px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+
+  nav a:hover,
+  nav a.active {
+    color: var(--bright);
+    border-bottom-color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* ── LAYOUT ── */
+  .wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 56px 48px;
+  }
+
+  /* ── SECTIONS ── */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── PAGE TITLE ── */
+  .page-title {
+    font-size: 1.6rem;
+    color: var(--bright);
+    letter-spacing: 3px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 18px;
+    margin-bottom: 36px;
+  }
+
+  /* ── HERO BANNER ── */
+  .hero-banner {
+    width: 100%;
+    aspect-ratio: 16/6;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 36px;
+    border: 1px solid var(--border);
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 36px 42px;
+    margin-bottom: 18px;
+  }
+
+  .card h3 {
+    font-size: 1.2rem;
+    color: var(--bright);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+
+  .card p {
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .card .meta {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  /* ── PATCH LIST ── */
+  .patch-list {
+    list-style: none;
+    margin-top: 12px;
+  }
+
+  .patch-list li {
+    font-size: 1rem;
+    padding: 5px 0;
+    display: flex;
+    gap: 12px;
+  }
+
+  .patch-list li .marker { color: var(--muted); width: 18px; flex-shrink: 0; }
+  .patch-list li.add   .marker { color: #69ff6e; }
+  .patch-list li.fix   .marker { color: #ff7070; }
+  .patch-list li.tweak .marker { color: #ffd166; }
+
+  /* ── BUTTON ── */
+  .btn {
+    display: inline-block;
+    padding: 16px 32px;
+    background: var(--accent);
+    color: #000;
+    font-family: 'CutePixel', monospace;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .btn:hover { opacity: 0.8; text-decoration: none; }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .btn-ghost:hover { border-color: var(--text); }
+
+  /* ── SCREENSHOT GRID ── */
+  .screenshot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .screenshot-grid img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+  }
+
+  .screenshot-grid img:hover { border-color: var(--accent); }
+
+  /* ── FAQ ── */
+  .faq-item { border-top: 1px solid var(--border); padding: 20px 0; }
+  .faq-item:first-child { border-top: none; }
+  .faq-q { color: var(--bright); font-size: 1.05rem; margin-bottom: 8px; }
+  .faq-a { font-size: 0.95rem; color: var(--muted); }
+
+  /* ── LIGHTBOX ── */
+  #lightbox {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+  }
+
+  #lightbox.open { display: flex; }
+  #lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 36px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  /* ── TEMPLATE NOTE ── */
+  .template-note {
+    border: 1px dashed var(--border);
+    padding: 24px 28px;
+    margin-bottom: 18px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-brand">
+    <img src="icon.png" alt="WM">
+    <h1>Wild Monkehs</h1>
+  </div>
+  <nav>
+    <a href="#" class="active" onclick="show('news',this);return false;">News</a>
+    <a href="#" onclick="show('patchnotes',this);return false;">Patch Notes</a>
+    <a href="#" onclick="show('download',this);return false;">Download</a>
+    <a href="#" onclick="show('support',this);return false;">Support</a>
+  </nav>
+</header>
+
+<div class="wrapper">
+
+  <!-- ═══════════════════════════════════════
+       NEWS
+       To add a news post, copy a <div class="card"> block below.
+  ═══════════════════════════════════════ -->
+  <div class="section active" id="s-news">
+    <div class="page-title">News</div>
+
+    <!-- NEWS CARD TEMPLATE — copy and fill in
+    <div class="card">
+      <div class="meta">Month Year</div>
+      <h3>Title goes here</h3>
+      <p>Description goes here.</p>
+      <a class="btn" href="#">Button (optional)</a>
+    </div>
+    -->
+
+    <div class="card">
+      <div class="meta">April 4 2026</div>
+      <h3>Wild Monkehs Website Launched</h3>
+      <p>Welcome to the new Wild Monkehs website! I am excited to share our latest updates and content with the community. Changes to the website will be rolled out regularly. Check back often for the latest news and updates!</p>
+    </div>
+
+    <div class="template-note">Check back often for the latest news!</div>
+
+    <!-- SCREENSHOT GRID TEMPLATE — add <img> tags inside
+    <div class="screenshot-grid">
+      <img src="your-image.png" alt="Screenshot" onclick="lb(this)">
+    </div>
+    -->
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       PATCH NOTES
+       To add a patch, copy a <div class="card"> block below.
+       li classes: add | fix | tweak
+  ═══════════════════════════════════════ -->
+  <div class="section" id="s-patchnotes">
+    <div class="page-title">Patch Notes</div>
+
+    <!-- PATCH CARD TEMPLATE — copy and fill in
+    <div class="card">
+      <div class="meta">Month DD, Year</div>
+      <h3>vX.X.X</h3>
+      <ul class="patch-list">
+        <li class="add">  <span class="marker">+</span> New thing added</li>
+        <li class="fix">  <span class="marker">-</span> Bug fixed</li>
+        <li class="tweak"><span class="marker">~</span> Something tweaked</li>
+      </ul>
+    </div>
+    -->
+
+    <div class="template-note">Check back often for the latest patch notes and updates!</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       DOWNLOAD
+  ═══════════════════════════════════════ -->
+  <div class="section" id="s-download">
+    <div class="page-title">Download</div>
+
+    <div class="card">
+      <h3>Meta Quest 2 / 3 / Pro</h3>
+      <p>Free on Meta Horizon Store. OpenXR native.</p>
+      <a class="btn" href="https://www.meta.com/experiences/wild-monkehs/24884445971208489/" target="_blank">Get on Meta</a>
+    </div>
+
+    <!-- REQUIREMENTS CARD — edit the list items below -->
+    <div class="card">
+      <h3>Requirements</h3>
+      <ul class="patch-list">
+        <li><span class="marker">·</span> Meta Quest 2, 3, or Pro</li>
+        <li><span class="marker">·</span> ~250 MB free storage</li>
+        <li><span class="marker">·</span> Internet required for multiplayer</li>
+      </ul>
+    </div>
+
+    <!-- Add more download cards here
+    <div class="card">
+      <h3>Title</h3>
+      <p>Description.</p>
+    </div>
+    -->
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SUPPORT
+  ═══════════════════════════════════════ -->
+  <div class="section" id="s-support">
+    <div class="page-title">Support</div>
+
+    <!-- CONTACT CARDS — update href links -->
+    <div class="card">
+      <h3>Bug Reports</h3>
+      <p>Include your Quest model and OS version.</p>
+      <a class="btn btn-ghost" href="mailto:support@wildmonkehs.com">Email Support</a>
+    </div>
+
+    <div class="card">
+      <h3>Community</h3>
+      <p>Join the Discord for updates and chat.</p>
+      <a class="btn btn-ghost" href="https://discord.gg/NmgsGvhceM" target="_blank">Discord</a>
+    </div>
+
+    <!-- FAQ CARD — copy a faq-item block to add questions -->
+    <div class="card">
+      <h3>FAQ</h3>
+
+      <!-- FAQ ITEM TEMPLATE — copy and fill in
+      <div class="faq-item">
+        <div class="faq-q">Question goes here?</div>
+        <div class="faq-a">Answer goes here.</div>
+      </div>
+      -->
+
+      <div class="faq-item">
+        <div class="faq-q">How do I apply for moderator or CC Badge?</div>
+        <div class="faq-a">Join our Discord and follow the instructions in the #cc-applications and the #moderator-applications channel.</div>
+      </div>
+
+      <div class="template-note">Check back often for the latest FAQ entries!</div>
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<footer>
+  &copy; 2025 Wild Monkehs · CrazyCatsStudio · All rights reserved.
+</footer>
+
+<div id="lightbox" onclick="this.classList.remove('open')">
+  <img id="lb-img" src="" alt="">
+</div>
+
+<script>
+  function show(id, el) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    document.getElementById('s-' + id).classList.add('active');
+    el.classList.add('active');
+  }
+
+  function lb(img) {
+    document.getElementById('lb-img').src = img.src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+  });
+</script>
+</body>
+</html>
