@@ -315,6 +315,7 @@
     letter-spacing: 1px;
   }
 </style>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
 
@@ -521,12 +522,13 @@
 <div id="apply-modal">
   <div class="modal-box">
     <h2>CC Application</h2>
-    <form name="cc-application" method="POST" data-netlify="true" onsubmit="handleApply(event)">
+    <form name="cc-application" method="POST" data-netlify="true" data-netlify-recaptcha="true" onsubmit="handleApply(event)">
       <input type="hidden" name="form-name" value="cc-application">
       <label for="yt-link">YouTube Channel URL</label>
       <input type="url" id="yt-link" name="youtube_url" placeholder="https://youtube.com/@yourchannel" required>
       <label for="pfid">Playfab ID</label>
       <input type="text" id="pfid" name="playfab_id" placeholder="ABCD1234" required>
+      <div data-netlify-recaptcha="true"></div>
       <div class="modal-actions">
         <button type="submit" class="btn">Submit</button>
         <button type="button" class="btn btn-ghost" onclick="closeApplyModal()">Cancel</button>
