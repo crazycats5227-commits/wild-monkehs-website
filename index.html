@@ -36,7 +36,7 @@
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
-  /* ── HEADER + NAV combined bar ── */
+  /* ── HEADER + NAV ── */
   header {
     background: var(--panel);
     border-bottom: 3px solid var(--border);
@@ -69,7 +69,6 @@
     white-space: nowrap;
   }
 
-  /* ── NAV tabs in header right ── */
   nav {
     display: flex;
     align-items: stretch;
@@ -102,7 +101,6 @@
     padding: 56px 48px;
   }
 
-  /* ── SECTIONS ── */
   .section { display: none; }
   .section.active { display: block; }
 
@@ -225,7 +223,7 @@
     display: none;
     position: fixed; inset: 0;
     background: rgba(0,0,0,0.9);
-    z-index: 999;
+    z-index: 998;
     align-items: center;
     justify-content: center;
     cursor: zoom-out;
@@ -252,6 +250,70 @@
     font-size: 0.85rem;
     letter-spacing: 1px;
   }
+
+  /* ── MODAL ── */
+  #apply-modal {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #apply-modal.open { display: flex; }
+
+  .modal-box {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 42px;
+    width: 100%;
+    max-width: 560px;
+  }
+
+  .modal-box h2 {
+    font-size: 1.2rem;
+    color: var(--bright);
+    letter-spacing: 2px;
+    margin-bottom: 28px;
+  }
+
+  .modal-box label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    margin-top: 18px;
+  }
+
+  .modal-box input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--bright);
+    font-family: 'CutePixel', monospace;
+    font-size: 1rem;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .modal-box input:focus { border-color: var(--accent); }
+
+  .modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .modal-success {
+    display: none;
+    color: #69ff6e;
+    font-size: 0.95rem;
+    margin-top: 20px;
+    letter-spacing: 1px;
+  }
 </style>
 </head>
 <body>
@@ -262,11 +324,11 @@
     <h1>Wild Monkehs</h1>
   </div>
   <nav>
-    <a href="#news"          class="active" onclick="show('news',this);return false;">News</a>
-    <a href="#patchnotes"    onclick="show('patchnotes',this);return false;">Updates</a>
-    <a href="#download"      onclick="show('download',this);return false;">Download</a>
-    <a href="#support"       onclick="show('support',this);return false;">Support</a>
-    <a href="#ccapplcations" onclick="show('ccapplcations',this);return false;">CC Applications</a>
+    <a href="#news"           class="active" onclick="show('news',this);return false;">News</a>
+    <a href="#patchnotes"     onclick="show('patchnotes',this);return false;">Updates</a>
+    <a href="#download"       onclick="show('download',this);return false;">Download</a>
+    <a href="#support"        onclick="show('support',this);return false;">Support</a>
+    <a href="#ccapplications" onclick="show('ccapplications',this);return false;">CC Applications</a>
   </nav>
 </header>
 
@@ -315,7 +377,7 @@
       <div class="meta">April 12, 2026</div>
       <h3>Update 17 Part 1 Build 2</h3>
       <ul class="patch-list">
-        <li class="add">  <span class="marker">+</span> Lobby Remastered!</li>
+        <li class="add"><span class="marker">+</span> Lobby Remastered!</li>
       </ul>
     </div>
 
@@ -346,7 +408,6 @@
       <a class="btn" href="https://www.meta.com/experiences/wild-monkehs/24884445971208489/" target="_blank">Get on Meta</a>
     </div>
 
-    <!-- REQUIREMENTS CARD — edit the list items below -->
     <div class="card">
       <h3>System Requirements</h3>
       <ul class="patch-list">
@@ -355,13 +416,6 @@
         <li><span class="marker">·</span> Internet required</li>
       </ul>
     </div>
-
-    <!-- Add more download cards here
-    <div class="card">
-      <h3>Title</h3>
-      <p>Description.</p>
-    </div>
-    -->
   </div>
 
   <!-- ═══════════════════════════════════════
@@ -370,7 +424,6 @@
   <div class="section" id="s-support">
     <div class="page-title">Support</div>
 
-    <!-- CONTACT CARDS — update href links -->
     <div class="card">
       <h3>Bug Reports</h3>
       <p>Include your Quest model and OS version.</p>
@@ -383,7 +436,6 @@
       <a class="btn btn-ghost" href="https://discord.gg/NmgsGvhceM" target="_blank">Discord</a>
     </div>
 
-    <!-- FAQ CARD — copy a faq-item block to add questions -->
     <div class="card">
       <h3>FAQ</h3>
 
@@ -403,59 +455,88 @@
     </div>
   </div>
 
-  <div class="section" id="s-ccapplcations">
+  <!-- ═══════════════════════════════════════
+       CC APPLICATIONS
+  ═══════════════════════════════════════ -->
+  <div class="section" id="s-ccapplications">
     <div class="page-title">CC Applications</div>
-  
+
     <div class="card">
       <h3>Apply for Content Creator in Wild Monkehs</h3>
-      <p>Include your Playfab-ID!</p>
-      <a class="btn" href="https://www.meta.com/experiences/wild-monkehs/24884445971208489/" target="_blank">Apply Now!</a>
+      <p>Include your Playfab-ID and YouTube channel link.</p>
+      <button class="btn" onclick="document.getElementById('apply-modal').classList.add('open')">Apply Now!</button>
     </div>
 
-   <div class="card">
-     <h3>Perks</h3>
-     <ul class="patch-list">
-       <li class="add">  <span class="marker">+</span> Invited to a special discord server with all the moderators, beta testers, and owner of the game.</li>
-       <li class="add">  <span class="marker">+</span> Own the “CC Badge” in Wild Monkehs. </li>
-     </ul>
-   </div>
+    <div class="card">
+      <h3>Perks</h3>
+      <ul class="patch-list">
+        <li class="add"><span class="marker">+</span> Invited to a special discord server with all the moderators, beta testers, and owner of the game.</li>
+        <li class="add"><span class="marker">+</span> Own the "CC Badge" in Wild Monkehs.</li>
+      </ul>
+    </div>
 
-   <div class="card">
-     <h3>Requirements</h3>
-     <ul class="patch-list">
-       <li class="tweak">  <span class="marker">~</span> 250 views or higher for long-forms.</li>
-       <li class="tweak">  <span class="marker">~</span> 1,000 views or higher for short-forms.</li>
-       <li class="tweak">  <span class="marker">~</span> Videos must be about the game.</li>
-       <li class="tweak">  <span class="marker">~</span> Medium quality videos.</li>
-       <li class="tweak">  <span class="marker"></span></li>
-       <a class="btn btn-ghost" href="#" onclick="show('ccrequirements',this);return false;">Full Document</a>
-     </ul>
+    <div class="card">
+      <h3>Requirements</h3>
+      <ul class="patch-list">
+        <li class="tweak"><span class="marker">~</span> 250 views or higher for long-forms.</li>
+        <li class="tweak"><span class="marker">~</span> 1,000 views or higher for short-forms.</li>
+        <li class="tweak"><span class="marker">~</span> Videos must be about the game.</li>
+        <li class="tweak"><span class="marker">~</span> Medium quality videos.</li>
+      </ul>
+      <br>
+      <button class="btn btn-ghost" onclick="show('ccrequirements', null)">Full Document</button>
     </div>
   </div>
 
+  <!-- ═══════════════════════════════════════
+       CC REQUIREMENTS FULL DOC
+  ═══════════════════════════════════════ -->
   <div class="section" id="s-ccrequirements">
+    <div class="page-title">CC Requirements</div>
+
     <div class="card">
       <h3>Tier 1 Requirements</h3>
       <ul class="patch-list">
-        <li><span class="marker">&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp; Content</li>
-        <li><span class="marker">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Medium quality.</li>
-        <li><span class="marker">&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp; View counts</li>
-        <li><span class="marker">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 250 views or higher for long-forms.</li>
-        <li><span class="marker">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1,000 views or higher for short-forms.</li>
-        <li><span class="marker">&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp; Subscriber counts</li>
-        <li><span class="marker">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; None!</li>
-        <li><span class="marker">&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp; Content type</li>
-        <li><span class="marker">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Must be about the game.</li>
-        <li><span class="marker">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Commentary doesn't count towards your application unless it is about the game.</li>
+        <li><span class="marker" style="display:inline-block;min-width:4ch;white-space:pre;">·</span> Content</li>
+        <li><span class="marker" style="display:inline-block;min-width:4ch;white-space:pre;">&nbsp;&nbsp;·</span> Medium quality.</li>
+        <li><span class="marker" style="display:inline-block;min-width:4ch;white-space:pre;">·</span> View counts</li>
+        <li><span class="marker" style="display:inline-block;min-width:4ch;white-space:pre;">&nbsp;&nbsp;·</span> 250 views or higher for long-forms.</li>
+        <li><span class="marker" style="display:inline-block;min-width:4ch;white-space:pre;">&nbsp;&nbsp;·</span> 1,000 views or higher for short-forms.</li>
+        <li><span class="marker" style="display:inline-block;min-width:4ch;white-space:pre;">·</span> Subscriber counts</li>
+        <li><span class="marker" style="display:inline-block;min-width:4ch;white-space:pre;">&nbsp;&nbsp;·</span> None!</li>
+        <li><span class="marker" style="display:inline-block;min-width:4ch;white-space:pre;">·</span> Content type</li>
+        <li><span class="marker" style="display:inline-block;min-width:4ch;white-space:pre;">&nbsp;&nbsp;·</span> Must be about the game.</li>
+        <li><span class="marker" style="display:inline-block;min-width:4ch;white-space:pre;">&nbsp;&nbsp;·</span> Commentary doesn't count towards your application unless it is about the game.</li>
       </ul>
     </div>
   </div>
+
 </div><!-- /wrapper -->
 
 <footer>
   &copy; 2025 Wild Monkehs · CrazyCatsStudio · All rights reserved.
 </footer>
 
+<!-- ── APPLY MODAL ── -->
+<div id="apply-modal">
+  <div class="modal-box">
+    <h2>CC Application</h2>
+    <form name="cc-application" method="POST" data-netlify="true" onsubmit="handleApply(event)">
+      <input type="hidden" name="form-name" value="cc-application">
+      <label for="yt-link">YouTube Channel URL</label>
+      <input type="url" id="yt-link" name="youtube_url" placeholder="https://youtube.com/@yourchannel" required>
+      <label for="pfid">Playfab ID</label>
+      <input type="text" id="pfid" name="playfab_id" placeholder="ABCD1234" required>
+      <div class="modal-actions">
+        <button type="submit" class="btn">Submit</button>
+        <button type="button" class="btn btn-ghost" onclick="closeApplyModal()">Cancel</button>
+      </div>
+      <div class="modal-success" id="apply-success">Application submitted! We'll be in touch.</div>
+    </form>
+  </div>
+</div>
+
+<!-- ── LIGHTBOX ── -->
 <div id="lightbox" onclick="this.classList.remove('open')">
   <img id="lb-img" src="" alt="">
 </div>
@@ -474,15 +555,43 @@
     document.getElementById('lightbox').classList.add('open');
   }
 
+  function closeApplyModal() {
+    document.getElementById('apply-modal').classList.remove('open');
+    document.getElementById('apply-success').style.display = 'none';
+  }
+
+  async function handleApply(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+    await fetch('/', { method: 'POST', body: new URLSearchParams(data) });
+    form.querySelectorAll('input[type="url"], input[type="text"]').forEach(i => i.value = '');
+    document.getElementById('apply-success').style.display = 'block';
+    setTimeout(closeApplyModal, 2500);
+  }
+
+  // Close modal on backdrop click
+  document.getElementById('apply-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeApplyModal();
+  });
+
+  // Close lightbox on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.getElementById('lightbox').classList.remove('open');
+      closeApplyModal();
+    }
+  });
+
+  // Hash-based routing on load
   window.addEventListener('DOMContentLoaded', () => {
     const hash = location.hash.slice(1);
-    const validTabs = ['news', 'patchnotes', 'download', 'support', 'ccapplcations'];
+    const validTabs = ['news', 'patchnotes', 'download', 'support', 'ccapplications', 'ccrequirements'];
     if (hash && validTabs.includes(hash)) {
       const navLink = document.querySelector(`nav a[onclick*="'${hash}'"]`);
       show(hash, navLink);
     }
   });
-  
 </script>
 </body>
 </html>
