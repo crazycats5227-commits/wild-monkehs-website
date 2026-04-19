@@ -528,8 +528,7 @@
       <input type="url" id="yt-link" name="youtube_url" placeholder="https://youtube.com/@yourchannel" required>
       <label for="pfid">Playfab ID</label>
       <input type="text" id="pfid" name="playfab_id" placeholder="ABCD1234" required>
-      <br>
-      <div data-netlify-recaptcha="true"></div>
+      <div data-netlify-recaptcha="true" style="margin-top: 24px;"></div>
       <div class="modal-actions">
         <button type="submit" class="btn">Submit</button>
         <button type="button" class="btn btn-ghost" onclick="closeApplyModal()">Cancel</button>
@@ -566,8 +565,26 @@
   async function handleApply(e) {
     e.preventDefault();
     const form = e.target;
+
+    // Check reCAPTCHA
+    const recaptcha = grecaptcha.getResponse();
+    if (!recaptcha) {
+      alert('Please complete the reCAPTCHA first.');
+      return;
+    }
+
+    // IP rate limit — 1 submission per day
+    const today = new Date().toDateString();
+    const lastSubmit = localStorage.getItem('wm_cc_submitted');
+    if (lastSubmit === today) {
+      alert('You have already submitted an application today.');
+      return;
+    }
+
     const data = new FormData(form);
     await fetch('/', { method: 'POST', body: new URLSearchParams(data) });
+
+    localStorage.setItem('wm_cc_submitted', today);
     form.querySelectorAll('input[type="url"], input[type="text"]').forEach(i => i.value = '');
     document.getElementById('apply-success').style.display = 'block';
     setTimeout(closeApplyModal, 2500);
