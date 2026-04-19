@@ -262,10 +262,11 @@
     <h1>Wild Monkehs</h1>
   </div>
   <nav>
-    <a href="#" class="active" onclick="show('news',this);return false;">News</a>
-    <a href="#" onclick="show('patchnotes',this);return false;">Patch Notes</a>
-    <a href="#" onclick="show('download',this);return false;">Download</a>
-    <a href="#" onclick="show('support',this);return false;">Support</a>
+    <a href="#news"          class="active" onclick="show('news',this);return false;">News</a>
+    <a href="#patchnotes"    onclick="show('patchnotes',this);return false;">Updates</a>
+    <a href="#download"      onclick="show('download',this);return false;">Download</a>
+    <a href="#support"       onclick="show('support',this);return false;">Support</a>
+    <a href="#ccapplcations" onclick="show('ccapplcations',this);return false;">CC Applications</a>
   </nav>
 </header>
 
@@ -308,7 +309,15 @@
        li classes: add | fix | tweak
   ═══════════════════════════════════════ -->
   <div class="section" id="s-patchnotes">
-    <div class="page-title">Patch Notes</div>
+    <div class="page-title">Updates</div>
+
+    <div class="card">
+      <div class="meta">April 12, 2026</div>
+      <h3>Update 17 Part 1 Build 2</h3>
+      <ul class="patch-list">
+        <li class="add">  <span class="marker">+</span> Lobby Remastered!</li>
+      </ul>
+    </div>
 
     <!-- PATCH CARD TEMPLATE — copy and fill in
     <div class="card">
@@ -332,18 +341,18 @@
     <div class="page-title">Download</div>
 
     <div class="card">
-      <h3>Meta Quest 2 / 3 / Pro</h3>
-      <p>Free on Meta Horizon Store. OpenXR native.</p>
+      <h3>Meta Quest 2 / 3 / 3S / Pro</h3>
+      <p>Free on Meta Horizon Store.</p>
       <a class="btn" href="https://www.meta.com/experiences/wild-monkehs/24884445971208489/" target="_blank">Get on Meta</a>
     </div>
 
     <!-- REQUIREMENTS CARD — edit the list items below -->
     <div class="card">
-      <h3>Requirements</h3>
+      <h3>System Requirements</h3>
       <ul class="patch-list">
-        <li><span class="marker">·</span> Meta Quest 2, 3, or Pro</li>
+        <li><span class="marker">·</span> Must be on a Meta Quest 2, 3, 3S, or Pro</li>
         <li><span class="marker">·</span> ~250 MB free storage</li>
-        <li><span class="marker">·</span> Internet required for multiplayer</li>
+        <li><span class="marker">·</span> Internet required</li>
       </ul>
     </div>
 
@@ -394,6 +403,53 @@
     </div>
   </div>
 
+  <div class="section" id="s-ccapplcations">
+    <div class="page-title">CC Applications</div>
+  
+    <div class="card">
+      <h3>Apply for Content Creator in Wild Monkehs</h3>
+      <p>Include your Playfab-ID!</p>
+      <a class="btn" href="https://www.meta.com/experiences/wild-monkehs/24884445971208489/" target="_blank">Apply Now!</a>
+    </div>
+
+   <div class="card">
+     <h3>Perks</h3>
+     <ul class="patch-list">
+       <li class="add">  <span class="marker">+</span> Invited to a special discord server with all the moderators, beta testers, and owner of the game.</li>
+       <li class="add">  <span class="marker">+</span> Own the “CC Badge” in Wild Monkehs. </li>
+     </ul>
+   </div>
+
+   <div class="card">
+     <h3>Requirements</h3>
+     <ul class="patch-list">
+       <li class="tweak">  <span class="marker">~</span> 250 views or higher for long-forms.</li>
+       <li class="tweak">  <span class="marker">~</span> 1,000 views or higher for short-forms.</li>
+       <li class="tweak">  <span class="marker">~</span> Videos must be about the game.</li>
+       <li class="tweak">  <span class="marker">~</span> Medium quality videos.</li>
+       <li class="tweak">  <span class="marker"></span></li>
+       <a class="btn btn-ghost" href="#" onclick="show('ccrequirements',this);return false;">Full Document</a>
+     </ul>
+    </div>
+  </div>
+
+  <div class="section" id="s-ccrequirements">
+    <div class="card">
+      <h3>Tier 1 Requirements</h3>
+      <ul class="patch-list">
+        <li><span class="marker">&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp; Content</li>
+        <li><span class="marker">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Medium quality.</li>
+        <li><span class="marker">&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp; View counts</li>
+        <li><span class="marker">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 250 views or higher for long-forms.</li>
+        <li><span class="marker">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1,000 views or higher for short-forms.</li>
+        <li><span class="marker">&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp; Subscriber counts</li>
+        <li><span class="marker">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; None!</li>
+        <li><span class="marker">&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp; Content type</li>
+        <li><span class="marker">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Must be about the game.</li>
+        <li><span class="marker">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Commentary doesn't count towards your application unless it is about the game.</li>
+      </ul>
+    </div>
+  </div>
 </div><!-- /wrapper -->
 
 <footer>
@@ -409,7 +465,8 @@
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
     document.getElementById('s-' + id).classList.add('active');
-    el.classList.add('active');
+    if (el) el.classList.add('active');
+    history.pushState(null, '', '#' + id);
   }
 
   function lb(img) {
@@ -417,9 +474,15 @@
     document.getElementById('lightbox').classList.add('open');
   }
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+  window.addEventListener('DOMContentLoaded', () => {
+    const hash = location.hash.slice(1);
+    const validTabs = ['news', 'patchnotes', 'download', 'support', 'ccapplcations'];
+    if (hash && validTabs.includes(hash)) {
+      const navLink = document.querySelector(`nav a[onclick*="'${hash}'"]`);
+      show(hash, navLink);
+    }
   });
+  
 </script>
 </body>
 </html>
