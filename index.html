@@ -130,7 +130,10 @@
     border: 1px solid var(--border);
     padding: 36px 42px;
     margin-bottom: 18px;
+    transition: border-color 0.15s;
   }
+
+  .card:hover { border-color: #4a4a4a; }
 
   .card h3 {
     font-size: 1.2rem;
@@ -149,6 +152,42 @@
     font-size: 0.85rem;
     color: var(--muted);
     margin-bottom: 14px;
+  }
+
+  /* ── CARD WITH IMAGE ── */
+  .card-row {
+    display: flex;
+    gap: 28px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 36px 42px;
+    margin-bottom: 18px;
+    transition: border-color 0.15s;
+  }
+
+  .card-row:hover { border-color: #4a4a4a; }
+
+  .card-row .card-body { flex: 1; min-width: 0; }
+
+  .card-row .card-img {
+    width: 180px;
+    height: 180px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    image-rendering: pixelated;
+    cursor: zoom-in;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .card-row .card-img:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 14px rgba(0,229,255,0.35);
+  }
+
+  @media (max-width: 760px) {
+    .card-row { flex-direction: column-reverse; }
+    .card-row .card-img { width: 100%; height: 220px; }
   }
 
   /* ── PATCH LIST ── */
@@ -352,7 +391,13 @@
     -->
 
     <div class="card">
-      <div class="meta">April 4 2026</div>
+      <div class="meta">June 14, 2026</div>
+      <h3>Wild Monkehs website updated!</h3>
+      <p>Check out the latest updates and improvements to the Wild Monkehs website!</p>
+    </div>
+
+    <div class="card">
+      <div class="meta">April 4, 2026</div>
       <h3>Wild Monkehs Website Launched</h3>
       <p>Welcome to the new Wild Monkehs website! I am excited to share our latest updates and content with the community. Changes to the website will be rolled out regularly. Check back often for the latest news and updates!</p>
     </div>
@@ -374,23 +419,106 @@
   <div class="section" id="s-patchnotes">
     <div class="page-title">Updates</div>
 
-    <div class="card">
-      <div class="meta">April 12, 2026</div>
-      <h3>Update 17 Part 1 Build 2</h3>
-      <ul class="patch-list">
-        <li class="add"><span class="marker">+</span> Lobby Remastered!</li>
-      </ul>
+    <div class="card-row">
+      <div class="card-body">
+        <div class="meta">June 14, 2026</div>
+        <h3>Update 19.1</h3>
+        <ul class="patch-list">
+          <li class="add"><span class="marker">+</span> New pride pack!</li>
+          <li class="add"><span class="marker">+</span> New shop in beach!</li>
+          <li class="add"><span class="marker">+</span> New school's out event!</li>
+        </ul>
+      </div>
+      <img class="card-img" src="update-19-1.png" alt="Update 19.1" onclick="lb(this)" width="512" height="512">
+    </div>
+
+    <div class="card-row">
+      <div class="card-body">
+        <div class="meta">June 1, 2026</div>
+        <h3>Update 19</h3>
+        <ul class="patch-list">
+          <li class="add"><span class="marker">+</span> New map in forest!</li>
+          <li class="add"><span class="marker">+</span> Camping decorations in forest!</li>
+          <li class="add"><span class="marker">+</span> A new variant for the shark fin!</li>
+        </ul>
+      </div>
+      <img class="card-img" src="update-19.png" alt="Update 19" onclick="lb(this)" width="512" height="512">
+    </div>
+
+    <div class="card-row">
+      <div class="card-body">
+        <div class="meta">May 12, 2026</div>
+        <h3>Update 18</h3>
+        <ul class="patch-list">
+          <li class="add"><span class="marker">+</span> Quests Beta have arrived!</li>
+          <li class="add"><span class="marker">+</span> New Party Time Event. Wild Monkehs is turning 6 months old on May 14!</li>
+          <li class="add"><span class="marker">+</span> Many new cosmetics in shop!</li>
+          <li class="add"><span class="marker">+</span> Movement has been fixed on low FPS!</li>
+        </ul>
+      </div>
+      <img class="card-img" src="update-18.png" alt="Update 18" onclick="lb(this)" width="512" height="512">
+    </div>
+
+    <div class="card-row">
+      <div class="card-body">
+        <div class="meta">April 28, 2026</div>
+        <h3>Update 17 Part 3 Build 2</h3>
+        <ul class="patch-list">
+          <li class="add"><span class="marker">+</span> New pack in Shop!</li>
+          <li class="add"><span class="marker">+</span> You can now see others LIV cameras and when they are recording!</li>
+          <li class="add"><span class="marker">+</span> Many bug patches regarding Monster AI and Cosmetics</li>
+        </ul>
+      </div>
+      <img class="card-img" src="update-17-3-2.png" alt="Update 17 Part 3 Build 2" onclick="lb(this)" width="512" height="512">
+    </div>
+
+    <div class="card-row">
+      <div class="card-body">
+        <div class="meta">April 26, 2026</div>
+        <h3>Update 17 Part 3</h3>
+        <ul class="patch-list">
+          <li class="add"><span class="marker">+</span> New Shop Update!</li>
+          <li class="add"><span class="marker">+</span> New LIV Update!</li>
+        </ul>
+      </div>
+      <img class="card-img" src="update-17-3.png" alt="Update 17 Part 3" onclick="lb(this)" width="512" height="512">
+    </div>
+
+    <div class="card-row">
+      <div class="card-body">
+        <div class="meta">April 22, 2026</div>
+        <h3>Update 17 Part 2</h3>
+        <ul class="patch-list">
+          <li class="add"><span class="marker">+</span> Level 5 of horror is here!</li>
+          <li class="add"><span class="marker">+</span> Moderate performance boost!</li>
+        </ul>
+      </div>
+      <img class="card-img" src="update-17-2.png" alt="Update 17 Part 2" onclick="lb(this)" width="512" height="512">
+    </div>
+
+    <div class="card-row">
+      <div class="card-body">
+        <div class="meta">April 12, 2026</div>
+        <h3>Update 17 Part 1 Build 2</h3>
+        <ul class="patch-list">
+          <li class="add"><span class="marker">+</span> Lobby Remastered!</li>
+        </ul>
+      </div>
+      <img class="card-img" src="update-17-1-2.png" alt="Update 17 Part 1 Build 2" onclick="lb(this)" width="512" height="512">
     </div>
 
     <!-- PATCH CARD TEMPLATE — copy and fill in
-    <div class="card">
-      <div class="meta">Month DD, Year</div>
-      <h3>vX.X.X</h3>
-      <ul class="patch-list">
-        <li class="add">  <span class="marker">+</span> New thing added</li>
-        <li class="fix">  <span class="marker">-</span> Bug fixed</li>
-        <li class="tweak"><span class="marker">~</span> Something tweaked</li>
-      </ul>
+    <div class="card-row">
+      <div class="card-body">
+        <div class="meta">Month DD, Year</div>
+        <h3>vX.X.X</h3>
+        <ul class="patch-list">
+          <li class="add">  <span class="marker">+</span> New thing added</li>
+          <li class="fix">  <span class="marker">-</span> Bug fixed</li>
+          <li class="tweak"><span class="marker">~</span> Something tweaked</li>
+        </ul>
+      </div>
+      <img class="card-img" src="your-512x512-image.png" alt="vX.X.X" onclick="lb(this)" width="512" height="512">
     </div>
     -->
 
