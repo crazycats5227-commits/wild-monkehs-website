@@ -291,7 +291,8 @@
   }
 
   /* ── MODAL ── */
-  #apply-modal {
+  #apply-modal,
+  #ban-appeal-modal {
     display: none;
     position: fixed; inset: 0;
     background: rgba(0,0,0,0.85);
@@ -300,7 +301,8 @@
     justify-content: center;
   }
 
-  #apply-modal.open { display: flex; }
+  #apply-modal.open,
+  #ban-appeal-modal.open { display: flex; }
 
   .modal-box {
     background: var(--panel);
@@ -340,6 +342,22 @@
 
   .modal-box input:focus { border-color: var(--accent); }
 
+  .modal-box textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--bright);
+    font-family: 'CutePixel', monospace;
+    font-size: 1rem;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.15s;
+    resize: vertical;
+    min-height: 110px;
+  }
+
+  .modal-box textarea:focus { border-color: var(--accent); }
+
   .modal-actions {
     display: flex;
     gap: 12px;
@@ -352,6 +370,25 @@
     font-size: 0.95rem;
     margin-top: 20px;
     letter-spacing: 1px;
+  }
+
+  /* ── WARNING BANNER ── */
+  .warning-banner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255, 64, 64, 0.1);
+    border: 1px solid #ff4040;
+    padding: 22px 28px;
+    margin-bottom: 18px;
+    color: #ff7070;
+    font-size: 0.95rem;
+  }
+
+  .warning-banner .warning-icon {
+    flex-shrink: 0;
+    font-size: 1.4rem;
+    line-height: 1;
   }
 </style>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -391,6 +428,16 @@
     -->
 
     <div class="card">
+      <div class="meta">August 27, 2026</div>
+      <h3>Update 20, Quest 2 News, and More!</h3>
+      <p>With Update 20, Wild Monkehs introduces exciting new features and content! Update 20 will be available soon in early September. I love my Quest 2 player base but the Quest 2 is getting quite old...
+        Quest 2 players will be able to play Wild Monkehs until the end of 2026. After that only Quest 3, 3s, and Pro players will be able to play Wild Monkehs. Quest 2 does not have the hardware to run 
+        Wild Monkehs at a good framerate. For early sneak peeks of Update 20, check out the Wild Monkehs Discord server! You can also now appeal your in-game bans directly on the website. 
+        Check out the Support section for more information.
+      </p>
+    </div>
+
+    <div class="card">
       <div class="meta">June 14, 2026</div>
       <h3>Wild Monkehs website updated!</h3>
       <p>Check out the latest updates and improvements to the Wild Monkehs website!</p>
@@ -418,6 +465,17 @@
   ═══════════════════════════════════════ -->
   <div class="section" id="s-patchnotes">
     <div class="page-title">Updates</div>
+
+    <div class="card-row">
+      <div class="card-body">
+        <div class="meta">June 16, 2026</div>
+        <h3>Update 19.2</h3>
+        <ul class="patch-list">
+          <li class="add"><span class="marker">+</span> Quality of life improvements and many bug fixes!</li>
+        </ul>
+      </div>
+      <img class="card-img" src="update-19-2.png" alt="Update 19.2" onclick="lb(this)" width="512" height="512">
+    </div>
 
     <div class="card-row">
       <div class="card-body">
@@ -531,6 +589,11 @@
   <div class="section" id="s-download">
     <div class="page-title">Download</div>
 
+    <div class="warning-banner">
+      <span class="warning-icon">⚠</span>
+      <span>Quest 2 support is ending soon! Quest 2 players can play through the end of 2026. After that, only Quest 3, 3S, and Pro will only be supported.</span>
+    </div>
+
     <div class="card">
       <h3>Meta Quest 2 / 3 / 3S / Pro</h3>
       <p>Free on Meta Horizon Store.</p>
@@ -552,6 +615,12 @@
   ═══════════════════════════════════════ -->
   <div class="section" id="s-support">
     <div class="page-title">Support</div>
+
+    <div class="card">
+      <h3>Ban Appeals</h3>
+      <p>Think your in-game ban was a mistake? Submit an appeal with your reason and Playfab ID and we'll take a look.</p>
+      <button class="btn" onclick="document.getElementById('ban-appeal-modal').classList.add('open')">Appeal a Ban</button>
+    </div>
 
     <div class="card">
       <h3>Bug Reports</h3>
@@ -643,7 +712,7 @@
 </div><!-- /wrapper -->
 
 <footer>
-  &copy; 2025 Wild Monkehs · CrazyCatsStudio · All rights reserved.
+  &copy; 2026 Wild Monkehs · CrazyCatsStudio · All rights reserved.
 </footer>
 
 <!-- ── APPLY MODAL ── -->
@@ -664,6 +733,26 @@
         <button type="button" class="btn btn-ghost" onclick="closeApplyModal()">Cancel</button>
       </div>
       <div class="modal-success" id="apply-success">Application submitted! We'll be in touch.</div>
+    </form>
+  </div>
+</div>
+
+<!-- ── BAN APPEAL MODAL ── -->
+<div id="ban-appeal-modal">
+  <div class="modal-box">
+    <h2>Ban Appeal</h2>
+    <form name="ban-appeal" method="POST" data-netlify="true" data-netlify-recaptcha="true" onsubmit="handleBanAppeal(event)">
+      <input type="hidden" name="form-name" value="ban-appeal">
+      <label for="ban-pfid">Playfab ID</label>
+      <input type="text" id="ban-pfid" name="playfab_id" placeholder="ABCD1234" required>
+      <label for="ban-reason">Reason for Appeal</label>
+      <textarea id="ban-reason" name="appeal_reason" placeholder="Tell us why you think your ban should be reviewed..." required></textarea>
+      <div data-netlify-recaptcha="true" style="margin-top: 24px;"></div>
+      <div class="modal-actions">
+        <button type="submit" class="btn">Submit</button>
+        <button type="button" class="btn btn-ghost" onclick="closeBanAppealModal()">Cancel</button>
+      </div>
+      <div class="modal-success" id="ban-appeal-success">Appeal submitted! We'll review it and get back to you.</div>
     </form>
   </div>
 </div>
@@ -690,6 +779,11 @@
   function closeApplyModal() {
     document.getElementById('apply-modal').classList.remove('open');
     document.getElementById('apply-success').style.display = 'none';
+  }
+
+  function closeBanAppealModal() {
+    document.getElementById('ban-appeal-modal').classList.remove('open');
+    document.getElementById('ban-appeal-success').style.display = 'none';
   }
 
   async function handleApply(e) {
@@ -720,16 +814,49 @@
     setTimeout(closeApplyModal, 2500);
   }
 
+  async function handleBanAppeal(e) {
+    e.preventDefault();
+    const form = e.target;
+
+    // Check reCAPTCHA
+    const recaptcha = grecaptcha.getResponse();
+    if (!recaptcha) {
+      alert('Please complete the reCAPTCHA first.');
+      return;
+    }
+
+    // IP rate limit — 1 appeal per day
+    const today = new Date().toDateString();
+    const lastSubmit = localStorage.getItem('wm_ban_appeal_submitted');
+    if (lastSubmit === today) {
+      alert('You have already submitted a ban appeal today.');
+      return;
+    }
+
+    const data = new FormData(form);
+    await fetch('/', { method: 'POST', body: new URLSearchParams(data) });
+
+    localStorage.setItem('wm_ban_appeal_submitted', today);
+    form.querySelectorAll('input[type="text"], textarea').forEach(i => i.value = '');
+    document.getElementById('ban-appeal-success').style.display = 'block';
+    setTimeout(closeBanAppealModal, 2500);
+  }
+
   // Close modal on backdrop click
   document.getElementById('apply-modal').addEventListener('click', function(e) {
     if (e.target === this) closeApplyModal();
   });
 
-  // Close lightbox on Escape
+  document.getElementById('ban-appeal-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeBanAppealModal();
+  });
+
+  // Close lightbox / modals on Escape
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       document.getElementById('lightbox').classList.remove('open');
       closeApplyModal();
+      closeBanAppealModal();
     }
   });
 
