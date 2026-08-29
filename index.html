@@ -257,6 +257,40 @@
   .faq-q { color: var(--bright); font-size: 1.05rem; margin-bottom: 8px; }
   .faq-a { font-size: 0.95rem; color: var(--muted); }
 
+  /* ── PRIVACY POLICY ── */
+  .policy-section { margin-bottom: 30px; }
+  .policy-section h3 {
+    font-size: 1.1rem;
+    color: var(--bright);
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+  .policy-section p,
+  .policy-section li {
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .policy-section ul {
+    list-style: none;
+    margin: 10px 0 10px 0;
+  }
+  .policy-section ul li {
+    padding-left: 22px;
+    position: relative;
+  }
+  .policy-section ul li::before {
+    content: "·";
+    position: absolute;
+    left: 6px;
+    color: var(--muted);
+  }
+  .policy-meta {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 30px;
+  }
+
   /* ── LIGHTBOX ── */
   #lightbox {
     display: none;
@@ -406,6 +440,7 @@
     <a href="#download"       onclick="show('download',this);return false;">Download</a>
     <a href="#support"        onclick="show('support',this);return false;">Support</a>
     <a href="#ccapplications" onclick="show('ccapplications',this);return false;">CC Applications</a>
+    <a href="#privacy"        onclick="show('privacy',this);return false;">Privacy Policy</a>
   </nav>
 </header>
 
@@ -465,6 +500,11 @@
   ═══════════════════════════════════════ -->
   <div class="section" id="s-patchnotes">
     <div class="page-title">Updates</div>
+
+    <div class="warning-banner">
+      <span class="warning-icon">⚠</span>
+      <span>Quest 2 support is ending soon! Quest 2 players can play through the end of 2026. After that, only Quest 3, 3S, and Pro will only be supported.</span>
+    </div>
 
     <div class="card-row">
       <div class="card-body">
@@ -709,6 +749,88 @@
     </div>
   </div>
 
+  <!-- ═══════════════════════════════════════
+       PRIVACY POLICY
+  ═══════════════════════════════════════ -->
+  <div class="section" id="s-privacy">
+    <div class="page-title">Privacy Policy</div>
+
+    <div class="card">
+      <div class="policy-meta">Effective Date: August 28, 2026 · Developer: CrazyCatsStudio</div>
+
+      <div class="policy-section">
+        <h3>1. Introduction</h3>
+        <p>CrazyCatsStudio ("we," "our," or "us") respects your privacy. This Privacy Policy clearly explains what data Wild Monkeh collects, how it is used, how it is processed, and how users can request data deletion when playing the game on the Meta Quest platform.</p>
+      </div>
+
+      <div class="policy-section">
+        <h3>2. Information We Collect</h3>
+        <p>Wild Monkeh collects limited data required for online gameplay, social features, and moderation. The data we collect includes:</p>
+        <ul>
+          <li>IP address</li>
+          <li>Account creation date and time</li>
+          <li>Login timestamps</li>
+          <li>Meta user ID and public profile information (username, display name, avatar), when you connect your Meta account</li>
+          <li>Meta friends list (used only to support in-game social features)</li>
+          <li>A device identifier, used solely to enforce device-level bans for abuse prevention</li>
+          <li>Deep linking destination data (used to route you directly to a specific location within the app, such as a lobby or event)</li>
+        </ul>
+        <p>We do not collect names beyond your Meta profile display name, email addresses, precise location data, or payment information. In-app purchases are processed entirely by the Meta Quest platform; we do not collect or store your payment details.</p>
+      </div>
+
+      <div class="policy-section">
+        <h3>3. How the Data Is Collected and Used</h3>
+        <p>This data is collected automatically or via Meta Platform SDK features when you use Wild Monkeh, and is used only for the following purposes:</p>
+        <ul>
+          <li><strong>User ID / User Profile</strong> — Identifying your account across sessions and displaying your username, display name, and avatar within the game.</li>
+          <li><strong>Friends</strong> — With your permission, accessing your Meta friends list to show which friends are online or in a session, and to support features such as party invites and matchmaking with friends. Friends data is used at runtime and is not shared with third parties beyond the service providers listed in Section 4.</li>
+          <li><strong>Deep Linking</strong> — Reading the destination identifier passed by the platform so the app can route you directly to a specific in-app location. This data is not used for tracking or shared externally.</li>
+          <li><strong>Device Ban</strong> — Associating a device identifier with a banned account to enforce bans and prevent abuse. This identifier is used solely for moderation and security, and is never used for advertising, analytics, or tracking.</li>
+          <li><strong>In-App Purchases / Downloadable Content</strong> — Recognizing your entitlement to purchased content so it can be unlocked in-game. Purchase transactions themselves are handled by the Meta Quest platform, not by us.</li>
+          <li><strong>General</strong> — Connecting players to multiplayer servers, maintaining online game sessions, and basic account moderation and security.</li>
+        </ul>
+        <p>The data is not used for advertising or for analytics/tracking outside of gameplay, social features, and moderation.</p>
+      </div>
+
+      <div class="policy-section">
+        <h3>4. Third-Party Services</h3>
+        <p>Wild Monkeh uses third-party services to provide online features. These services may process limited data as required for functionality:</p>
+        <ul>
+          <li><strong>Photon Engine</strong> — Multiplayer networking. Photon may process connection-related data such as IP address and session identifiers.</li>
+          <li><strong>PlayFab (Microsoft)</strong> — Backend services such as matchmaking, account management, and player statistics. PlayFab may process anonymous player identifiers and timestamps.</li>
+          <li><strong>Meta Platform SDK</strong> — Provides User ID, User Profile, Friends, Deep Linking, Device Ban, and In-App Purchase functionality as described above, in accordance with Meta's Developer Data Use Policy.</li>
+        </ul>
+        <p>These third-party services process data according to their own privacy policies and comply with applicable data protection laws.</p>
+      </div>
+
+      <div class="policy-section">
+        <h3>5. Data Storage and Security</h3>
+        <p>We store only the minimum amount of data necessary for online functionality, social features, and moderation. Data is not sold or shared with unauthorized third parties. Reasonable security measures are used by both CrazyCatsStudio and the third-party service providers to protect the data they process.</p>
+      </div>
+
+      <div class="policy-section">
+        <h3>6. Children's Privacy</h3>
+        <p>Wild Monkeh does not knowingly collect personal information from children under the age of 13 beyond the limited data described in this policy. If we become aware that such data was collected in violation of applicable laws, we will take steps to delete it.</p>
+      </div>
+
+      <div class="policy-section">
+        <h3>7. Data Deletion Requests</h3>
+        <p>Users may request deletion of their data at any time. Data deletion requests can be submitted through the following Google Form link: <a href="https://forms.gle/HqNLwZt2BukECp3b8" target="_blank">forms.gle/HqNLwZt2BukECp3b8</a></p>
+        <p>Once a valid request is received, we will delete the associated data within a reasonable timeframe, unless retention is required for security, moderation, or legal purposes (such as active bans).</p>
+      </div>
+
+      <div class="policy-section">
+        <h3>8. Contact Information</h3>
+        <p>For any privacy-related questions or concerns, please contact us via the email address listed on the Wild Monkeh Meta store page.</p>
+      </div>
+
+      <div class="policy-section">
+        <h3>9. Changes to This Privacy Policy</h3>
+        <p>We may update this Privacy Policy from time to time. Any changes will be posted with an updated Effective Date.</p>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /wrapper -->
 
 <footer>
@@ -863,7 +985,7 @@
   // Hash-based routing on load
   window.addEventListener('DOMContentLoaded', () => {
     const hash = location.hash.slice(1);
-    const validTabs = ['news', 'patchnotes', 'download', 'support', 'ccapplications', 'ccrequirements'];
+    const validTabs = ['news', 'patchnotes', 'download', 'support', 'ccapplications', 'ccrequirements', 'privacy'];
     if (hash && validTabs.includes(hash)) {
       const navLink = document.querySelector(`nav a[onclick*="'${hash}'"]`);
       show(hash, navLink);
