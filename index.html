@@ -826,7 +826,7 @@
 <div id="apply-modal">
   <div class="modal-box">
     <h2>CC Application</h2>
-    <form name="cc-application" method="POST" data-netlify="true" data-netlify-recaptcha="true" onsubmit="handleApply(event)">
+    <form name="cc-application" method="POST" data-netlify="true" onsubmit="handleApply(event)">
       <input type="hidden" name="form-name" value="cc-application">
       <label for="yt-link">YouTube Channel URL</label>
       <input type="url" id="yt-link" name="youtube_url" placeholder="https://youtube.com/@yourchannel" required>
@@ -834,7 +834,25 @@
       <input type="text" id="pfid" name="playfab_id" placeholder="ABCD1234" required>
       <label for="discord">Discord Username (optional but recommended)</label>
       <input type="text" id="discord" name="discord_username" placeholder="awesomename123">
-      <div id="apply-recaptcha" data-netlify-recaptcha="true" style="margin-top: 24px;"></div>
+      <div id="apply-recaptcha" style="margin-top: 24px;">
+        <div class="g-recaptcha" data-sitekey="6LdW7r8sAAAAABl53QDuq8NItYRBpavJy3H5PFrv"></div>
+        <noscript>
+          <div>
+            <div style="width: 302px; height: 422px; position: relative;">
+              <div style="width: 302px; height: 422px; position: absolute;">
+                <iframe src="https://www.google.com/recaptcha/api/fallback?k=6LdW7r8sAAAAABl53QDuq8NItYRBpavJy3H5PFrv" frameborder="0" scrolling="no"
+                  style="width: 302px; height:422px; border-style: none;">
+                </iframe>
+              </div>
+            </div>
+            <div style="width: 300px; height: 60px; border-style: none; bottom: 12px; left: 25px; margin: 0px; padding: 0px; right: 25px; background: #f9f9f9; border: 1px solid #c1c1c1; border-radius: 3px;">
+              <textarea name="g-recaptcha-response"
+                style="width: 250px; height: 40px; border: 1px solid #c1c1c1; margin: 10px 25px; padding: 0px; resize: none;">
+              </textarea>
+            </div>
+          </div>
+        </noscript>
+      </div>
       <div class="modal-actions">
         <button type="submit" class="btn">Submit</button>
         <button type="button" class="btn btn-ghost" onclick="closeApplyModal()">Cancel</button>
@@ -848,13 +866,31 @@
 <div id="ban-appeal-modal">
   <div class="modal-box">
     <h2>Ban Appeal</h2>
-    <form name="ban-appeal" method="POST" data-netlify="true" data-netlify-recaptcha="true" onsubmit="handleBanAppeal(event)">
+    <form name="ban-appeal" method="POST" data-netlify="true" onsubmit="handleBanAppeal(event)">
       <input type="hidden" name="form-name" value="ban-appeal">
       <label for="ban-pfid">Playfab ID</label>
       <input type="text" id="ban-pfid" name="playfab_id" placeholder="ABCD1234" required>
       <label for="ban-reason">Reason for Appeal</label>
       <textarea id="ban-reason" name="appeal_reason" placeholder="Tell us why you think your ban should be reviewed..." required></textarea>
-      <div id="ban-appeal-recaptcha" data-netlify-recaptcha="true" style="margin-top: 24px;"></div>
+      <div id="ban-appeal-recaptcha" style="margin-top: 24px;">
+        <div class="g-recaptcha" data-sitekey="6LdW7r8sAAAAABl53QDuq8NItYRBpavJy3H5PFrv"></div>
+        <noscript>
+          <div>
+            <div style="width: 302px; height: 422px; position: relative;">
+              <div style="width: 302px; height: 422px; position: absolute;">
+                <iframe src="https://www.google.com/recaptcha/api/fallback?k=6LdW7r8sAAAAABl53QDuq8NItYRBpavJy3H5PFrv" frameborder="0" scrolling="no"
+                  style="width: 302px; height:422px; border-style: none;">
+                </iframe>
+              </div>
+            </div>
+            <div style="width: 300px; height: 60px; border-style: none; bottom: 12px; left: 25px; margin: 0px; padding: 0px; right: 25px; background: #f9f9f9; border: 1px solid #c1c1c1; border-radius: 3px;">
+              <textarea name="g-recaptcha-response"
+                style="width: 250px; height: 40px; border: 1px solid #c1c1c1; margin: 10px 25px; padding: 0px; resize: none;">
+              </textarea>
+            </div>
+          </div>
+        </noscript>
+      </div>
       <div class="modal-actions">
         <button type="submit" class="btn">Submit</button>
         <button type="button" class="btn btn-ghost" onclick="closeBanAppealModal()">Cancel</button>
@@ -894,21 +930,19 @@
   }
 
   // ── reCAPTCHA widget IDs ──
-  // Netlify auto-injects a reCAPTCHA widget into every element with
-  // data-netlify-recaptcha="true", in DOM order. Because this page has
-  // TWO such elements (apply form + ban-appeal form), grecaptcha assigns
-  // them widget IDs 0 and 1 respectively. Calling grecaptcha.getResponse()
-  // with no argument always checks widget 0 (the apply form's captcha),
-  // which is why the ban-appeal form was failing even after the captcha
-  // was completed. We track each widget's ID explicitly instead.
+  // Both forms render their own <div class="g-recaptcha" data-sitekey="...">
+  // explicitly, with our real reCAPTCHA v2 site key. Google's api.js script
+  // (loaded once in <head>) auto-renders every .g-recaptcha element it finds
+  // on page load, in DOM order — so the apply form's widget becomes ID 0,
+  // and the ban-appeal form's becomes ID 1. Calling grecaptcha.getResponse()
+  // with no argument always checks widget 0, which is why the ban-appeal
+  // form appeared broken even after completing its captcha. We reference
+  // each widget's ID explicitly instead.
   let applyRecaptchaId = null;
   let banAppealRecaptchaId = null;
 
   function resolveRecaptchaWidgetIds() {
-    if (typeof grecaptcha === 'undefined' || !grecaptcha.render) return;
-    // Widgets render themselves automatically; we just need to figure out
-    // which index belongs to which container. Netlify assigns IDs in the
-    // order the containers appear in the DOM, so:
+    if (typeof grecaptcha === 'undefined' || !grecaptcha.getResponse) return;
     applyRecaptchaId = 0;
     banAppealRecaptchaId = 1;
   }
